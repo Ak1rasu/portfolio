@@ -1,9 +1,22 @@
 import windowTexture from "../assets/textures/window.jpg";
-import {useVideoTexture, RoundedBox} from "@react-three/drei";
+import {useVideoTexture, RoundedBox, useTexture} from "@react-three/drei";
 import { windowVideo } from "./season.jsx";
+import { useState, useEffect} from "react";
 
 export default function Components() {
     const videoTexture = useVideoTexture(windowVideo);
+    const [page, setPage] = useState("room");
+    const [hovered, setHovered] = useState(false);
+    const caseyPhoto = useTexture("../ui/assets/myself.jpg")
+
+    useEffect(() => {
+        const canvas = document.querySelector("canvas");
+        if (hovered) {
+            canvas.style.cursor = "pointer";
+        } else {
+            canvas.style.cursor = "default";
+        }
+    }, [hovered]);
 
     return (
         <>
@@ -91,6 +104,37 @@ export default function Components() {
                 metalness={0.8}
                 roughness={0.25}
             />
+            </mesh>
+            {/*  PICTURE FRAME */}
+<mesh 
+    position={[-1, 0.48, 0.4]} 
+    rotation={[-0.2, -Math.PI / -10.15, 0]}
+
+    onClick={() => window.location.href = "/onepager.html"}
+
+    onPointerOver={() => setHovered(true)}
+    onPointerOut={() => setHovered(false)}
+>
+    <boxGeometry args={[0.6, 0.75, 0.12]} />
+
+    <meshStandardMaterial
+        color="#241811"
+        roughness={0.8}
+        emissive="#85644b"
+        emissiveIntensity={hovered ? 1.5 : 0.4}
+    />
+</mesh>
+
+            {/* Photo */}
+            <mesh
+            position={[-0.98, 0.5, 0.48]}
+            rotation={[-0.2, -Math.PI / -12, 0]}
+            onClick={() => window.location.href = "/onepager.html"}
+            onPointerOver={() => setHovered(true)}
+            onPointerOut={() => setHovered(false)}
+            >
+                <planeGeometry args={[0.5, 0.61]} />
+                <meshBasicMaterial map={caseyPhoto} />
             </mesh>
         </>
     )

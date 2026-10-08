@@ -13,7 +13,7 @@ function Studio() {
             <Environment files={roomHDR} />
             <Room/>
             <Components/>
-            <OrbitControls/>
+            {/* <OrbitControls/> */} 
         </Canvas>
     )
 }
